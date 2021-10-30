@@ -1,6 +1,7 @@
+#include "log.h"
+#include "renderer.h"
 #include <GL/glew.h>
 #include <glfwpp/glfwpp.h>
-#include <iostream>
 
 void APIENTRY opengl_error_callback(GLenum source, GLenum type, GLuint id,
                                     GLenum severity, GLsizei length,
@@ -100,9 +101,20 @@ void APIENTRY opengl_error_callback(GLenum source, GLenum type, GLuint id,
   std::snprintf(message, BUFSIZ, "%s (%d) of %s severity, raised from %s: %s\n",
                 _type, id, _severity, _source, msg);
 
-  if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
-    //__debugbreak();
-    std::clog << message << '\n';
+  if (severity != GL_DEBUG_SEVERITY_NOTIFICATION) {
+    switch (severity) {
+    case GL_DEBUG_SEVERITY_NOTIFICATION:
+      LOG_INFO(message);
+      break;
+
+    case GL_DEBUG_SEVERITY_HIGH:
+    case GL_DEBUG_SEVERITY_MEDIUM:
+    case GL_DEBUG_SEVERITY_LOW:
+    default:
+      LOG_WARNING(message);
+      break;
+    }
+  }
 }
 
 int main() {
@@ -124,16 +136,15 @@ int main() {
   glfw::makeContextCurrent(window);
 
   if (glewInit() != GLEW_OK) {
-    throw std::runtime_error("Could not initialize GLEW");
+    LOG_ERROR("Could not initialize GLEW");
   }
 
   glDebugMessageCallback(opengl_error_callback, NULL);
 
+  Renderer renderer;
+
   while (!window.shouldClose()) {
-    {
-      const float clear_color[]{1, 1, 1, 0};
-      glClearNamedFramebufferfv(0, GL_COLOR, 0, clear_color);
-    }
+    renderer.draw();
 
     window.swapBuffers();
     glfw::pollEvents();
