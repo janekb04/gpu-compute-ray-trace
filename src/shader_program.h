@@ -14,6 +14,7 @@ public:
     glLinkProgram(name);
     check_link_status();
   }
+  void use() const { glUseProgram(name); }
   ~ShaderProgram() { glDeleteProgram(name); }
 
 private:

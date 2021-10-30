@@ -1,6 +1,6 @@
+#include "extern.h"
 #include "log.h"
 #include "renderer.h"
-#include "extern.h"
 
 void APIENTRY opengl_error_callback(GLenum source, GLenum type, GLuint id,
                                     GLenum severity, GLsizei length,
@@ -125,8 +125,8 @@ int main() {
     hints.contextVersionMajor = 4;
     hints.contextVersionMinor = 6;
     hints.openglProfile = glfw::OpenGlProfile::Core;
-    hints.transparentFramebuffer = true;
     hints.resizable = false;
+    hints.openglDebugContext = true;
     hints.apply();
   }
 
