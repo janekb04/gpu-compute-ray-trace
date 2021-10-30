@@ -5,3 +5,9 @@ target_compile_definitions(main PRIVATE GLEW_STATIC)
 if (MSVC)
 	target_compile_options(main PRIVATE "/Zc:preprocessor")
 endif()
+
+if (MSVC)
+    configure_file("main.comp" "Debug/main.comp" COPYONLY) # todo: handle release
+else()
+    configure_file("main.comp" "main.comp" COPYONLY)
+endif()
