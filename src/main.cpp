@@ -1,7 +1,6 @@
 #include "log.h"
 #include "renderer.h"
-#include <GL/glew.h>
-#include <glfwpp/glfwpp.h>
+#include "extern.h"
 
 void APIENTRY opengl_error_callback(GLenum source, GLenum type, GLuint id,
                                     GLenum severity, GLsizei length,

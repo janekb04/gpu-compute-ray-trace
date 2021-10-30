@@ -1,3 +1,6 @@
+#ifndef LOG_H
+#define LOG_H
+
 #include <iostream>
 #include <source_location>
 #include <type_traits>
@@ -43,4 +46,6 @@ void log(const std::source_location location, auto &&...args) {
 #define LOG_DEBUG_INFO(...) LOG_INFO(__VA_ARGS__)
 #define LOG_DEBUG_WARNING(...) LOG_WARNING(__VA_ARGS__)
 #define LOG_DEBUG_ERROR(...) LOG_ERROR(__VA_ARGS__)
+#endif
+
 #endif
