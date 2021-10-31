@@ -3,4 +3,7 @@
 in vec2 uv;
 out vec4 frag_color;
 
-void main() { frag_color = vec4(uv, 0, 1); }
+void main() {
+  vec3 ray_dir = normalize(vec3(uv, 1));
+  frag_color = vec4(ray_dir, 1);
+}
